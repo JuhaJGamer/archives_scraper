@@ -122,11 +122,11 @@ def parse_legislation_specs(md):
 def parse_act(md):
     return list(map(
         lambda m:
-            [m[1],parse_category(md[m.end():].split('##*')[0])],
+            [m[1],parse_part(md[m.end():].split('##*')[0])],
         re.finditer(r'^##\*\*(?:Part \d ?[–-] ?)?([^\*]+)',md)
     ))
 
-def parse_category(md):
+def parse_part(md):
     return []
 
 if __name__ == "__main__":
@@ -136,8 +136,6 @@ if __name__ == "__main__":
     categories = parse_na(md)
     print(categories)
     categories_parsed = parse_categories(categories)
-    print(json.dumps(parse_categories(categories), indent=2))
-    print(categories)
     print(json.dumps(populate_with_legal_text(categories_parsed), indent=2))
     # parse_categories(categories)
 
