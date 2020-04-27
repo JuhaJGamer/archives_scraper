@@ -22,6 +22,7 @@ def fake_ua_get(url):
 
 # Get a url and raise if the request fails
 def get_and_raise(url):
+    print(f"Getting {url}...")
     req = fake_ua_get(url)
     req.raise_for_status()
     return req
@@ -85,13 +86,11 @@ def parse_categories(categories):
 # Get legal text of all laws and amendments in categories
 # And add it to the lists
 def populate_with_legal_text(categories):
-    print(categories)
     return list(map(populate_category, categories))
 
 # Get legal text of all laws and amendments in a category
 # And add them to the lists
 def populate_category(category):
-    print(category)
     return [category[0], list(map(
         (lambda i:
             [i[0], i[1], i[2], populate_amendments(i[3]), parse_legal_text(get_wiki_md(i[1]))]),
@@ -111,30 +110,35 @@ def parse_metadata(md):
 
 # Parse the 'Legislation Specs' metadata box
 def parse_legislation_specs(md):
-    return list(map(
-        lambda m:
-            m[1],
-        re.finditer(r'\*\*: ?(.*)', md)
-        ))
+    if md is not None:
+        return list(map(
+            lambda m:
+                m[1],
+            re.finditer(r'\*\*: ?(.*)', md)
+            ))
+    else:
+        return None
 
 # Parse the main text of an act
 # Into a structured format
 def parse_act(md):
     return list(map(
         lambda m:
-            [m[1],parse_part(md[m.end():].split('##*')[0])],
-        re.finditer(r'^##\*\*(?:Part \d ?[–-] ?)?([^\*]+)',md)
+            [m[1],parse_part(md[m.end():].split('\n##*')[0])],
+        re.finditer(r'^##\*\*(?:Part \d ?[–-] ?)?([^\*]+)',md, re.MULTILINE)
     ))
 
 def parse_part(md):
-    return []
+    return md
+
+def populate_amendments(md):
+    return ""
 
 if __name__ == "__main__":
     sub = "SimDemocracy"
     url = wiki_to_uri("national_archives", sub)
     md = get_wiki_md(url)
     categories = parse_na(md)
-    print(categories)
     categories_parsed = parse_categories(categories)
     print(json.dumps(populate_with_legal_text(categories_parsed), indent=2))
     # parse_categories(categories)
