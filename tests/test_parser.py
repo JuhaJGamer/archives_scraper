@@ -1,5 +1,5 @@
 import json
-from main import parse_na, parse_categories, parse_legal_text
+from archives_scraper import parse_na, parse_categories, parse_legal_text
 
 def test_na():
     data_in = ""
