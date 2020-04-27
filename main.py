@@ -59,8 +59,7 @@ def parse_amendments(amend_str):
 # Parse one amendment tag
 # into an amendment object
 def parse_amendment_str(amend_str):
-    return (lambda m: m[1]
-           )(re.search(r'\(([^)]+)\)',amend_str))
+    return re.search(r'\(([^)]+)\)',amend_str)[1]
 
 # Parse the date of enactment
 # From a human-readable format
@@ -129,7 +128,42 @@ def parse_act(md):
     ))
 
 def parse_part(md):
-    return md
+    return list(map(
+        lambda m: [m[1],parse_article(m[2])],
+        re.finditer(r'###\*?\*?(?:Article \d+ -|-)? ?(.+)\*?\*?\n?([^#]*)', md)
+        ))
+
+# Parses the contents of an article
+# And returns an array of section objects
+def parse_article(md):
+    return parse_section(re.findall('\*\*§?((?:\d+\.)+)\*\* ([^*&]+)',md),[])
+
+# Count the number of occurences
+# for a certain character in a certain string
+# Most likely built in but i like showing off with recursion
+def countc(s,c):
+    if len(s) == 0:
+        return 0
+    elif s[0] == c:
+        return countc(s[1:],c) + 1
+    else:
+        return countc(s[1:],c)
+
+# Append at different depths recursively
+# Probably also built in but I like flexing my recursion skillz
+def rec_append(i, o, d):
+    if d == 0:
+        return o + [i]
+    else:
+        return o[:-1] + [rec_append(i,o[-1],d-1)]
+
+# Parse section matches into section objects
+def parse_section(s, l):
+    if len(s) == 0:
+        return l
+    n = countc(s[0][0],'.')
+    return parse_section(s[1:], rec_append([s[0][1]],l,n-1))
+
 
 def populate_amendments(md):
     return ""
