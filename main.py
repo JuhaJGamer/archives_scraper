@@ -22,7 +22,6 @@ def fake_ua_get(url):
 
 # Get a url and raise if the request fails
 def get_and_raise(url):
-    print(f"Getting {url}...")
     req = fake_ua_get(url)
     req.raise_for_status()
     return req
@@ -92,8 +91,11 @@ def populate_with_legal_text(categories):
 def populate_category(category):
     return [category[0], list(map(
         (lambda i:
-            [i[0], i[1], i[2], populate_amendments(i[3]), parse_legal_text(get_wiki_md(i[1]))]),
+            flatten_metadata([i[0], i[1], i[2], populate_amendments(i[3]), parse_legal_text(get_wiki_md(i[1]))])),
         category[1]))]
+
+def flatten_metadata(act):
+    return [act[0],act[1],act[2],act[3],act[4][0],act[4][1]]
 
 # Parse the legal text
 # Of a law and construct
