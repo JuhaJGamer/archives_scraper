@@ -138,7 +138,7 @@ def parse_part(md):
 # Parses the contents of an article
 # And returns an array of section objects
 def parse_article(md):
-    return parse_section(re.findall('\*\*§?((?:\d+\.)+)\*\* ([^*&]+)',md),[])
+    return parse_section(re.findall(r'\*\*§?((?:\d+\.)+)\*\* ([^*&]+)',md),[])
 
 # Count the number of occurences
 # for a certain character in a certain string
