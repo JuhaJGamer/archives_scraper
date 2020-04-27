@@ -9,7 +9,7 @@ ua = UserAgent()
 def get_none(x,i):
     if x is not None:
         return x[i]
-    else
+    else:
         return x
 
 # Construct wiki page url
@@ -85,15 +85,17 @@ def parse_categories(categories):
 # Get legal text of all laws and amendments in categories
 # And add it to the lists
 def populate_with_legal_text(categories):
+    print(categories)
     return list(map(populate_category, categories))
 
 # Get legal text of all laws and amendments in a category
 # And add them to the lists
 def populate_category(category):
-    return [category[0], 0list(map(
+    print(category)
+    return [category[0], list(map(
         (lambda i:
             [i[0], i[1], i[2], populate_amendments(i[3]), parse_legal_text(get_wiki_md(i[1]))]),
-        category[1])]
+        category[1]))]
 
 # Parse the legal text
 # Of a law and construct
@@ -132,8 +134,11 @@ if __name__ == "__main__":
     url = wiki_to_uri("national_archives", sub)
     md = get_wiki_md(url)
     categories = parse_na(md)
-    categories = parse_categories(categories)
-    print(json.dumps(populate_with_legal_text(categories), indent=2))
+    print(categories)
+    categories_parsed = parse_categories(categories)
+    print(json.dumps(parse_categories(categories), indent=2))
+    print(categories)
+    print(json.dumps(populate_with_legal_text(categories_parsed), indent=2))
     # parse_categories(categories)
 
 
