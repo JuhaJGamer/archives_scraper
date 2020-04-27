@@ -6,6 +6,12 @@ from fake_useragent import UserAgent
 
 ua = UserAgent()
 
+def get_none(x,i):
+    if x is not None:
+        return x[i]
+    else
+        return x
+
 # Construct wiki page url
 def wiki_to_uri(url, subreddit):
     return f"https://www.reddit.com/r/{subreddit}/wiki/{url}"
@@ -76,12 +82,58 @@ def parse_category(category):
 def parse_categories(categories):
     return list(map(parse_category, categories))
 
+# Get legal text of all laws and amendments in categories
+# And add it to the lists
+def populate_with_legal_text(categories):
+    return list(map(populate_category, categories))
+
+# Get legal text of all laws and amendments in a category
+# And add them to the lists
+def populate_category(category):
+    return [category[0], 0list(map(
+        (lambda i:
+            [i[0], i[1], i[2], populate_amendments(i[3]), parse_legal_text(get_wiki_md(i[1]))]),
+        category[1])]
+
+# Parse the legal text
+# Of a law and construct
+# A structured version
+def parse_legal_text(md):
+    return (parse_metadata(md), parse_act(md))
+
+# Parse the metadata found above an act
+# And return it as an object
+def parse_metadata(md):
+    return parse_legislation_specs(
+            get_none(re.search(r'##Legislation Specs\n\n((?:.|\n)+)\*\*\*', md),1))
+
+# Parse the 'Legislation Specs' metadata box
+def parse_legislation_specs(md):
+    return list(map(
+        lambda m:
+            m[1],
+        re.finditer(r'\*\*: ?(.*)', md)
+        ))
+
+# Parse the main text of an act
+# Into a structured format
+def parse_act(md):
+    return list(map(
+        lambda m:
+            [m[1],parse_category(md[m.end():].split('##*')[0])],
+        re.finditer(r'^##\*\*(?:Part \d ?[–-] ?)?([^\*]+)',md)
+    ))
+
+def parse_category(md):
+    return []
+
 if __name__ == "__main__":
     sub = "SimDemocracy"
     url = wiki_to_uri("national_archives", sub)
     md = get_wiki_md(url)
     categories = parse_na(md)
-    print(json.dumps(parse_categories(categories), indent=2))
+    categories = parse_categories(categories)
+    print(json.dumps(populate_with_legal_text(categories), indent=2))
     # parse_categories(categories)
 
 
