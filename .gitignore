@@ -1,2 +1,5 @@
 *.json
 __*
+!/tests/
+!/tests/*.json
+!/tests/*.txt

@@ -1,0 +1,59 @@
+##Amendment Notice
+This document [was amended](https://www.reddit.com/r/SimDemocracy/wiki/deputy_soe_de-restriction_amendment). See the link for information on what information specifically was amended.
+
+This document [was amended](https://www.reddit.com/r/SimDemocracy/wiki/senate_resolutions) a second time.
+
+This document [was amended](https://www.reddit.com/r/SimDemocracy/wiki/standard_formatting_amendment) a third time.
+
+***
+
+##Legislation Specs
+
+**Source document**: https://www.reddit.com/r/SimDemocracy/comments/f8dsj6/new_executive_reformation_act_new_era_draft_2/
+
+**Proof of passage**: https://www.reddit.com/r/SimDemocracy/comments/fal7t4/senate_vote_5_votes/
+***
+
+#**Dumb unit test act**
+
+##**Preamble**
+
+**Whereas;** We currently have like zero unit tests
+
+**Whereas;** We kinda need those
+
+The Parliament of My Brain puts into effect the following law:
+
+##**Part 1 - Tests**
+
+###**Article 1 - Definitions**
+
+**§1.** A test is to be defined as a piece of code which checks whether another piece of code works properly
+
+**§1.1.** A unit test is a piece of code which runs on a small piece of a larger codebase (e.g. function)
+
+**§2.** 'Running' tests is defined as running the code which checks whether the other code is working, and using those results to validate the other code
+
+###**Article 2 - Requirements**
+
+**§1.** Each large parsing chain is to be subject to testing
+
+**§1.1.** This includes the following:
+
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*§1.1.1** National Archives front page parsing
+
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*§1.1.2.** Act and category metadata parsing
+
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*12.1.3.** Act content and in-content metadata parsing
+
+##**Part 2 – Testing documents**
+
+##**Article 1 – Documents used for parsing checks
+
+**§1.** This document is to be the document used for act parsing.
+
+**§2.** For category parsing, a saved version of the national archives shall be used
+
+**§3.** For NA parsing, a saved version of the national archives shall be used.
+
+
